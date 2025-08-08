@@ -1,21 +1,13 @@
-import path from 'path';
-import 'reflect-metadata';
-import { createExpressServer, useContainer } from 'routing-controllers';
-import { Container } from 'typedi';
-import loadControllers, { loadMiddlewares } from './utils/load-controllers';
+import { appConfig } from './config/app.config';
+import { createApp } from './server';
 
-export function createApp() {
-	useContainer(Container);
+async function bootstrap() {
+	const app = await createApp();
+	const PORT = appConfig.port;
 
-	const controllers = loadControllers(path.join(__dirname, 'modules'));
-	const middlewares = loadMiddlewares(path.join(__dirname, 'middlewares'));
-
-	const app = createExpressServer({
-		controllers,
-		middlewares,
-		routePrefix: '/api/v0',
-		defaultErrorHandler: true,
+	app.listen(PORT, () => {
+		console.log(`Server is running on http://localhost:${PORT}`);
 	});
-
-	return app;
 }
+
+void bootstrap();

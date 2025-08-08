@@ -1,16 +1,16 @@
 {
 	"name": "express-crud-api-with-oop-di",
 	"version": "1.0.0",
-	"description": "",
-	"main": "server.js",
+	"description": "Express Blog Post API with routing-controllers & typedi",
+	"main": "main.js",
 	"scripts": {
-		"dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+		"dev": "ts-node-dev --respawn --transpile-only src/main.ts",
 		"build": "tsc",
-		"start": "node ./build/server.js"
+		"start": "node ./build/main.js"
 	},
 	"keywords": [],
 	"author": "Rahim Ahasan",
-	"license": "ISC",
+	"license": "MIT",
 	"packageManager": "pnpm@10.14.0",
 	"dependencies": {
 		"body-parser": "^2.2.0",

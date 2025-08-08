@@ -1,14 +1,24 @@
+import path from 'path';
 import 'reflect-metadata';
-import { appConfig } from './config/app.config';
-import { createApp } from './main';
+import { createExpressServer, useContainer } from 'routing-controllers';
+import { Container } from 'typedi';
+import connectMongo from './database/connectDB';
+import loadControllers, { loadMiddlewares } from './utils/load-controllers';
 
-async function bootstrap() {
-	const app = createApp();
-	const PORT = appConfig.port;
+export async function createApp() {
+	useContainer(Container);
 
-	app.listen(PORT, () => {
-		console.log(`Server is running on http://localhost:${PORT}`);
+	await connectMongo();
+
+	const controllers = loadControllers(path.join(__dirname, 'modules'));
+	const middlewares = loadMiddlewares(path.join(__dirname, 'middlewares'));
+
+	const app = createExpressServer({
+		controllers,
+		middlewares,
+		routePrefix: '/api/v0',
+		defaultErrorHandler: true,
 	});
-}
 
-void bootstrap();
+	return app;
+}

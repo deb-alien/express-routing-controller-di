@@ -4,4 +4,5 @@ dotenv.config({ quiet: true });
 
 export const appConfig = {
 	port: process.env.PORT,
+	mongoURI: process.env.MONGO_URI,
 };
